@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<link
+	rel="stylesheet"
+	href="{% static 'css/applications/application-index.css' %}" />
+{% endblock %} {% block content %}
+
+<section class="page-header">
+	<h1>My Applications</h1>
+</section>
+
+<section class="index-table">
+	<table>
+		<tr>
+			<th>Creation Date</th>
+			<th>Company Name</th>
+			<th>Position</th>
+			<th>Status</th>
+		</tr>
+		{% for application in application_list %}
+		<tr>
+			<td>{{ application.date_applied}}</td>
+			<td>{{ application.company_name}}</td>
+			<td>
+				<a href="{% url 'application-detail' application.id %}"
+					>{{ application.position}}</a
+				>
+			</td>
+			<td>{{ application.status}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</section>
+{% endblock %}
