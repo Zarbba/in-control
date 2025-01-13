@@ -3,6 +3,11 @@ from . import views
 
 urlpatterns = [
     path(
+        "applications/create/",
+        views.ApplicationCreate.as_view(),
+        name="application-create",
+    ),
+    path(
         "applications/<int:pk>/",
         views.ApplicationDetail.as_view(),
         name="application-detail",

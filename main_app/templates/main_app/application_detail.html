@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<link
+	rel="stylesheet"
+	href="{% static 'css/applications/application-detail.css' %}" />
+{% endblock %} {% block content %}
+
+<div class="page-header">
+	<h1>{{application.position}}</h1>
+</div>
+
+<div class="page-body">
+	Date Created: {{application.date_applied}} Company:
+	{{application.company_name}} Status: {{application.get_status_display}}
+</div>
+<a href="" class="btn warn">Edit</a>
+<a href="" class="btn danger">Delete</a>
+
+{% endblock %}
