@@ -8,6 +8,11 @@ urlpatterns = [
         name="application-create",
     ),
     path(
+        "applications/<int:pk>/update",
+        views.ApplicationUpdate.as_view(),
+        name="application-update",
+    ),
+    path(
         "applications/<int:pk>/",
         views.ApplicationDetail.as_view(),
         name="application-detail",

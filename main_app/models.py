@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 APPLICATION_STATUS = (
@@ -18,6 +19,9 @@ class Application(models.Model):
     status = models.CharField(
         max_length=2, choices=APPLICATION_STATUS, default=APPLICATION_STATUS[0][0]
     )
+
+    def get_absolute_url(self):
+        return reverse("application-detail", kwargs={"pk": self.id})
 
     def __str__(self):
         return f"An application for {self.position} at {self.company_name} made on {self.date_applied}"
