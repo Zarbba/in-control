@@ -17,5 +17,10 @@ urlpatterns = [
         views.ApplicationDetail.as_view(),
         name="application-detail",
     ),
+    path(
+        "applications/<int:pk>/delete/",
+        views.ApplicationDelete.as_view(),
+        name="application-delete",
+    ),
     path("applications/", views.ApplicationList.as_view(), name="application-index"),
 ]

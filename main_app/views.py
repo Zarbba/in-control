@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Application
 from django import forms
 
@@ -37,3 +37,8 @@ class ApplicationList(ListView):
 
 class ApplicationDetail(DetailView):
     model = Application
+
+
+class ApplicationDelete(DeleteView):
+    model = Application
+    success_url = "/applications/"
