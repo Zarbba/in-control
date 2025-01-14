@@ -46,6 +46,10 @@ class ApplicationUpdate(LoginRequiredMixin, UpdateView):
 class ApplicationList(LoginRequiredMixin, ListView):
     model = Application
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
+
 
 class ApplicationDetail(LoginRequiredMixin, DetailView):
     model = Application
