@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path("", views.Home.as_view(), name="home"),
     path(
         "applications/create/",
         views.ApplicationCreate.as_view(),
@@ -23,4 +24,5 @@ urlpatterns = [
         name="application-delete",
     ),
     path("applications/", views.ApplicationList.as_view(), name="application-index"),
+    path("accounts/signup/", views.signup, name="signup"),
 ]
