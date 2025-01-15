@@ -8,7 +8,7 @@
 	<h1>{{application.position}}</h1>
 </div>
 
-<div class="page-body">
+<div class="application-container">
 	Date Created: {{application.created_date}} Company:
 	{{application.company_name}} Status: {{application.get_status_display}}
 </div>
@@ -18,5 +18,29 @@
 <a href="{% url 'application-delete' application.id %}" class="btn danger"
 	>Delete</a
 >
+
+<div class="progress-container">
+	<div class="subsection-title">
+		<h2>Progress Items</h2>
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<th>Type</th>
+				<th>Action Date</th>
+				<th>Notes</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for progress_item in application.progressitem_set.all %}
+			<tr>
+				<td>{{progress_item.type}}</td>
+				<td>{{progress_item.action_date}}</td>
+				<td>{{progress_item.notes}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 
 {% endblock %}
