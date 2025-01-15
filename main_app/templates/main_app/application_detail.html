@@ -23,6 +23,12 @@
 	<div class="subsection-title">
 		<h2>Progress Items</h2>
 	</div>
+	<h3>Add a Progress Item</h3>
+	<form method="post" class="subsection-content" autocomplete="off">
+		{% csrf_token %} {{ form.as_p }}
+		<button type="submit" class="btn submit">Add Progress Item</button>
+	</form>
+
 	<table>
 		<thead>
 			<tr>
@@ -37,6 +43,18 @@
 				<td>{{progress_item.type}}</td>
 				<td>{{progress_item.action_date}}</td>
 				<td>{{progress_item.notes}}</td>
+				{% comment %}
+				<a
+					href="{% url 'progress_item-update' progress_item.id %}"
+					class="btn warn"
+					>Edit</a
+				>
+				<a
+					href="{% url 'progress_item-delete' progress_item.id %}"
+					class="btn danger"
+					>Delete</a
+				>
+				{% endcomment %}
 			</tr>
 			{% endfor %}
 		</tbody>

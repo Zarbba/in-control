@@ -2,12 +2,30 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-APPLICATION_STATUS = (
+APPLICATION_STATUSES = (
     ("TS", "To Submit"),
     ("SU", "Submitted"),
     ("R", "Rejected"),
     ("P", "Progressing to Next Stage"),
     ("SC", "Successful"),
+)
+
+TITLES = (
+    ("MR", "Mr"),
+    ("MISS", "Miss"),
+    ("MRS", "Mrs"),
+    ("MX", "Mx"),
+    ("MS", "Ms"),
+    ("O", "Other"),
+)
+
+EDUCATION_TYPES = (
+    ("B", "Bachelor"),
+    ("M", "Masters"),
+    ("PHD", "Philosophical Doctorate"),
+    ("D", "Diploma"),
+    ("MD", "Medical Doctorate"),
+    ("O", "Other"),
 )
 
 
@@ -17,7 +35,7 @@ class Application(models.Model):
     company_name = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
     status = models.CharField(
-        max_length=2, choices=APPLICATION_STATUS, default=APPLICATION_STATUS[0][0]
+        max_length=2, choices=APPLICATION_STATUSES, default=APPLICATION_STATUSES[0][0]
     )
 
     def get_absolute_url(self):
@@ -35,3 +53,54 @@ class ProgressItem(models.Model):
 
     def __str__(self):
         return f"A {self.type} progress item."  # TODO - Figure out how to call the application here to add it to the string.
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    title = models.CharField(
+        max_length=4, choices=TITLES, default=TITLES[0][0], blank=True
+    )
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
+    headline = models.CharField(max_length=250, blank=True)
+    profile_picture_url = models.CharField(max_length=250, blank=True)
+    resume_url = models.CharField(max_length=250, blank=True)
+
+    def __str__(self):
+        return f"{self.get_title_display()} {self.first_name} {self.last_name}"
+
+
+class Skill(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    skill = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"A skill named {self.skill} for the user profile."  # TODO - Figure out how to call the application here to add it to the string.
+
+
+class Experience(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True)
+    is_current = models.BooleanField()
+    company_name = models.CharField(max_length=100)
+    position = models.CharField(max_length=100)
+    description = models.CharField(max_length=250)
+
+    def __str__(self):
+        return f"An experience entry as {self.position} at {self.company_name} for the user profile."  # TODO - Figure out how to call the application here to add it to the string.
+
+
+class Education(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True)
+    is_current = models.BooleanField()
+    institution_name = models.CharField(max_length=100)
+    qualification = models.CharField(max_length=100)
+    type = models.CharField(
+        max_length=3, choices=EDUCATION_TYPES, default=EDUCATION_TYPES[0][0]
+    )
+
+    def __str__(self):
+        return f"An educational record for a {self.type} of {self.qualification} at {self.institution_name} for the user profile."  # TODO - Figure out how to call the application here to add it to the string.
