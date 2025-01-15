@@ -52,19 +52,19 @@ class ProgressItem(models.Model):
     notes = models.CharField(max_length=250)
 
     def __str__(self):
-        return f"A {self.type} progress item."  # TODO - Figure out how to call the application here to add it to the string.
+        return f"A {self.type} progress item for {self.application.position} at {self.application.company_name}."
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.CharField(
-        max_length=4, choices=TITLES, default=TITLES[0][0], blank=True
+        max_length=4, choices=TITLES, default=TITLES[0][0], blank=True, null=True
     )
-    first_name = models.CharField(max_length=100, blank=True)
-    last_name = models.CharField(max_length=100, blank=True)
-    headline = models.CharField(max_length=250, blank=True)
-    profile_picture_url = models.CharField(max_length=250, blank=True)
-    resume_url = models.CharField(max_length=250, blank=True)
+    first_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
+    headline = models.CharField(max_length=250, blank=True, null=True)
+    profile_picture_url = models.CharField(max_length=250, blank=True, null=True)
+    resume_url = models.CharField(max_length=250, blank=True, null=True)
 
     def __str__(self):
         return f"{self.get_title_display()} {self.first_name} {self.last_name}"
@@ -75,7 +75,7 @@ class Skill(models.Model):
     skill = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"A skill named {self.skill} for the user profile."  # TODO - Figure out how to call the application here to add it to the string.
+        return f"A skill named {self.skill} for {self.profile}'s profile."
 
 
 class Experience(models.Model):
@@ -88,7 +88,7 @@ class Experience(models.Model):
     description = models.CharField(max_length=250)
 
     def __str__(self):
-        return f"An experience entry as {self.position} at {self.company_name} for the user profile."  # TODO - Figure out how to call the application here to add it to the string.
+        return f"An experience entry as {self.position} at {self.company_name} for {self.profile}'s profile."
 
 
 class Education(models.Model):
@@ -103,4 +103,4 @@ class Education(models.Model):
     )
 
     def __str__(self):
-        return f"An educational record for a {self.type} of {self.qualification} at {self.institution_name} for the user profile."  # TODO - Figure out how to call the application here to add it to the string.
+        return f"An educational record for a {self.type} of {self.qualification} at {self.institution_name} for {self.profile}'s profile."
