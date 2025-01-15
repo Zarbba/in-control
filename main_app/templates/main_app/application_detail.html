@@ -9,7 +9,7 @@
 </div>
 
 <div class="page-body">
-	Date Created: {{application.date_applied}} Company:
+	Date Created: {{application.created_date}} Company:
 	{{application.company_name}} Status: {{application.get_status_display}}
 </div>
 <a href="{% url 'application-update' application.id %}" class="btn warn"

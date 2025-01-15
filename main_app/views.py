@@ -15,12 +15,12 @@ class Home(LoginView):
 
 class ApplicationCreate(LoginRequiredMixin, CreateView):
     model = Application
-    fields = ["date_applied", "company_name", "position", "status"]
+    fields = ["created_date", "company_name", "position", "status"]
 
     def get_form(self, form_class=None):
         form = super(ApplicationCreate, self).get_form(self.get_form_class())
 
-        form.fields["date_applied"].widget = forms.DateInput(
+        form.fields["created_date"].widget = forms.DateInput(
             format=("%Y-%m-%d"), attrs={"placeholder": "Select a date", "type": "date"}
         )
         return form
@@ -32,12 +32,12 @@ class ApplicationCreate(LoginRequiredMixin, CreateView):
 
 class ApplicationUpdate(LoginRequiredMixin, UpdateView):
     model = Application
-    fields = ["date_applied", "company_name", "position", "status"]
+    fields = ["created_date", "company_name", "position", "status"]
 
     def get_form(self, form_class=None):
         form = super(ApplicationUpdate, self).get_form(self.get_form_class())
 
-        form.fields["date_applied"].widget = forms.DateInput(
+        form.fields["created_date"].widget = forms.DateInput(
             format=("%Y-%m-%d"), attrs={"placeholder": "Select a date", "type": "date"}
         )
         return form

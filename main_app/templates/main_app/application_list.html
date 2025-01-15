@@ -18,7 +18,7 @@
 		</tr>
 		{% for application in application_list %}
 		<tr>
-			<td>{{ application.date_applied}}</td>
+			<td>{{ application.created_date}}</td>
 			<td>{{ application.company_name}}</td>
 			<td>
 				<a href="{% url 'application-detail' application.id %}"
