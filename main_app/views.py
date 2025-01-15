@@ -53,11 +53,16 @@ class ApplicationList(LoginRequiredMixin, ListView):
 
 class ApplicationDetail(LoginRequiredMixin, DetailView):
     model = Application
+    # TODO - Rewrite this as a custom view to enable displaying the ProgressItem form
 
 
 class ApplicationDelete(LoginRequiredMixin, DeleteView):
     model = Application
     success_url = "/applications/"
+
+
+# TODO - Create a profile DetailView(custom) and EditView
+# TODO - Create Ad ListView, DetailView, CreateView, EditView and DeleteView
 
 
 def signup(request):

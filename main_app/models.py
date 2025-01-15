@@ -104,3 +104,6 @@ class Education(models.Model):
 
     def __str__(self):
         return f"An educational record for a {self.type} of {self.qualification} at {self.institution_name} for {self.profile}'s profile."
+
+
+# TODO - Create models for Applicants and Ad's
