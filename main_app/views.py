@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Application
+from .models import Application, ProgressItem
 from .forms import ProgressItemForm
 from django import forms
 
@@ -58,6 +58,24 @@ class ApplicationDelete(LoginRequiredMixin, DeleteView):
     success_url = "/applications/"
 
 
+class ProgressItemUpdate(LoginRequiredMixin, UpdateView):
+    model = ProgressItem
+    fields = ["type", "action_date", "notes"]
+
+    def get_form(self, form_class=None):
+        form = super(ProgressItemUpdate, self).get_form(self.get_form_class())
+
+        form.fields["action_date"].widget = forms.DateInput(
+            format=("%Y-%m-%d"), attrs={"placeholder": "Select a date", "type": "date"}
+        )
+        return form
+
+
+class ProgressItemDelete(LoginRequiredMixin, DeleteView):
+    model = ProgressItem
+    success_url = f"/applications/"
+
+
 # TODO - Create a profile DetailView(custom) and EditView
 # TODO - Create Ad ListView, DetailView, CreateView, EditView and DeleteView
 
@@ -73,6 +91,7 @@ def application_detail(request, application_id):
     )
 
 
+@login_required
 def add_progress_item(request, application_id):
     form = ProgressItemForm(request.POST)
     if form.is_valid():

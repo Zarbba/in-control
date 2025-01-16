@@ -54,6 +54,11 @@ class ProgressItem(models.Model):
     def __str__(self):
         return f"A {self.type} progress item for {self.application.position} at {self.application.company_name}."
 
+    def get_absolute_url(self):
+        return reverse(
+            "application-detail", kwargs={"application_id": self.application.id}
+        )
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -47,18 +47,16 @@
 				<td>{{progress_item.type}}</td>
 				<td>{{progress_item.action_date}}</td>
 				<td>{{progress_item.notes}}</td>
-				{% comment %}
 				<a
-					href="{% url 'progress_item-update' progress_item.id %}"
+					href="{% url 'progress-item-update' progress_item.id %}"
 					class="btn warn"
 					>Edit</a
 				>
 				<a
-					href="{% url 'progress_item-delete' progress_item.id %}"
+					href="{% url 'progress-item-delete' progress_item.id   %}"
 					class="btn danger"
 					>Delete</a
 				>
-				{% endcomment %}
 			</tr>
 			{% endfor %}
 		</tbody>

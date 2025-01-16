@@ -29,5 +29,15 @@ urlpatterns = [
         views.ApplicationDelete.as_view(),
         name="application-delete",
     ),
+    path(
+        "progressitems/<int:pk>/update",
+        views.ProgressItemUpdate.as_view(),
+        name="progress-item-update",
+    ),
+    path(
+        "progressitems/<int:pk>/delete/",
+        views.ProgressItemDelete.as_view(),
+        name="progress-item-delete",
+    ),
     path("accounts/signup/", views.signup, name="signup"),
 ]
