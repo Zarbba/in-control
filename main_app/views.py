@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Application
+from .forms import ProgressItemForm
 from django import forms
 
 
@@ -51,11 +53,6 @@ class ApplicationList(LoginRequiredMixin, ListView):
         return queryset.filter(user=self.request.user)
 
 
-class ApplicationDetail(LoginRequiredMixin, DetailView):
-    model = Application
-    # TODO - Rewrite this as a custom view to enable displaying the ProgressItem form
-
-
 class ApplicationDelete(LoginRequiredMixin, DeleteView):
     model = Application
     success_url = "/applications/"
@@ -63,6 +60,26 @@ class ApplicationDelete(LoginRequiredMixin, DeleteView):
 
 # TODO - Create a profile DetailView(custom) and EditView
 # TODO - Create Ad ListView, DetailView, CreateView, EditView and DeleteView
+
+
+@login_required
+def application_detail(request, application_id):
+    application = Application.objects.get(id=application_id)
+    progress_item_form = ProgressItemForm()
+    return render(
+        request,
+        "applications/detail.html",
+        {"application": application, "progress_item_form": progress_item_form},
+    )
+
+
+def add_progress_item(request, application_id):
+    form = ProgressItemForm(request.POST)
+    if form.is_valid():
+        new_progress_item = form.save(commit=False)
+        new_progress_item.application_id = application_id
+        new_progress_item.save()
+    return redirect("application-detail", application_id=application_id)
 
 
 def signup(request):

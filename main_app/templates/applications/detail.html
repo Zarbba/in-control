@@ -24,8 +24,12 @@
 		<h2>Progress Items</h2>
 	</div>
 	<h3>Add a Progress Item</h3>
-	<form method="post" class="subsection-content" autocomplete="off">
-		{% csrf_token %} {{ form.as_p }}
+	<form
+		action="{% url 'add-progress-item' application.id %}"
+		method="post"
+		class="subsection-content"
+		autocomplete="off">
+		{% csrf_token %} {{ progress_item_form.as_p }}
 		<button type="submit" class="btn submit">Add Progress Item</button>
 	</form>
 
