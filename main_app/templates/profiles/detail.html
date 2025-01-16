@@ -12,8 +12,11 @@
     {% else %}
     <image src="{% static 'images/pfp-placeholder.svg' %}" alt="A silhouette of a person."/>
     {% endif %}
+    {% if user.id == profile.id %}
+    {% comment %} edit button for PFP {% endcomment %}
+    {% endif %}
 	<h1>
-		{{profile.get_title_display}} {{profile.first_name}} {{profile.last_name}}
+		{{profile.get_title_display}} {{profile.first_name}} {{profile.last_name}} {% if user.id == profile.id %} <a href = "{% url 'profile-update' profile.id %}">Edit</a> {% endif %}
 	</h1>
 </div>
 
@@ -21,6 +24,9 @@
 <div class="resume-container">
     <a href"{{profile.resume_url}}">View Resume</a>
 </div>
+{% endif %}
+{% if user.id == profile.id %}
+{% comment %} link for uploading resume {% endcomment %}
 {% endif %}
 
 <div class="profile-container">

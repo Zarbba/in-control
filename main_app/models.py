@@ -39,7 +39,7 @@ class Application(models.Model):
     )
 
     def get_absolute_url(self):
-        return reverse("application-detail", kwargs={"pk": self.id})
+        return reverse("application-detail", kwargs={"application_id": self.id})
 
     def __str__(self):
         return f"An application for {self.position} at {self.company_name} made on {self.created_date}"
@@ -75,7 +75,7 @@ class Profile(models.Model):
         return f"{self.get_title_display()} {self.first_name} {self.last_name}"
 
     def get_absolute_url(self):
-        return reverse("profile-detail", kwargs={"pk": self.id})
+        return reverse("profile-detail", kwargs={"profile_id": self.id})
 
 
 class Skill(models.Model):
@@ -85,24 +85,30 @@ class Skill(models.Model):
     def __str__(self):
         return f"A skill named {self.skill} for {self.profile}'s profile."
 
+    def get_absolute_url(self):
+        return reverse("profile-detail", kwargs={"profile_id": self.profile.id})
+
 
 class Experience(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     start_date = models.DateField()
-    end_date = models.DateField(blank=True)
+    end_date = models.DateField(blank=True, null=True)
     is_current = models.BooleanField()
     company_name = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
-    description = models.CharField(max_length=250)
+    description = models.CharField(max_length=250, blank=True, null=True)
 
     def __str__(self):
         return f"An experience entry as {self.position} at {self.company_name} for {self.profile}'s profile."
+
+    def get_absolute_url(self):
+        return reverse("profile-detail", kwargs={"profile_id": self.profile.id})
 
 
 class Education(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     start_date = models.DateField()
-    end_date = models.DateField(blank=True)
+    end_date = models.DateField(blank=True, null=True)
     is_current = models.BooleanField()
     institution_name = models.CharField(max_length=100)
     qualification = models.CharField(max_length=100)
@@ -112,6 +118,9 @@ class Education(models.Model):
 
     def __str__(self):
         return f"An educational record for a {self.type} of {self.qualification} at {self.institution_name} for {self.profile}'s profile."
+
+    def get_absolute_url(self):
+        return reverse("profile-detail", kwargs={"profile_id": self.profile.id})
 
 
 # TODO - Create models for Applicants and Ad's

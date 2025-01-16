@@ -76,6 +76,15 @@ class ProgressItemDelete(LoginRequiredMixin, DeleteView):
     success_url = f"/applications/"
 
 
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = [
+        "title",
+        "first_name",
+        "last_name",
+    ]
+
+
 class ExperienceDelete(LoginRequiredMixin, DeleteView):
     model = Experience
     success_url = f"/applications/"
@@ -91,7 +100,6 @@ class SkillDelete(LoginRequiredMixin, DeleteView):
     success_url = f"/applications/"
 
 
-# TODO - Create a profile DetailView(custom) and EditView
 # TODO - Create Ad ListView, DetailView, CreateView, EditView and DeleteView
 
 

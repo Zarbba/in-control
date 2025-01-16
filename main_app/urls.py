@@ -35,6 +35,11 @@ urlpatterns = [
         name="progress-item-update",
     ),
     path(
+        "profiles/<int:pk>/update",
+        views.ProfileUpdate.as_view(),
+        name="profile-update",
+    ),
+    path(
         "educations/<int:pk>/delete/",
         views.EducationDelete.as_view(),
         name="education-delete",
