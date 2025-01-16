@@ -6,8 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Application, ProgressItem
-from .forms import ProgressItemForm
+from .models import Application, ProgressItem, Profile
+from .forms import ProgressItemForm, SkillForm, EducationForm, ExperienceForm
 from django import forms
 
 
@@ -81,6 +81,24 @@ class ProgressItemDelete(LoginRequiredMixin, DeleteView):
 
 
 @login_required
+def profile_detail(request, profile_id):
+    profile = Profile.objects.get(id=profile_id)
+    skill_form = SkillForm()
+    education_form = EducationForm()
+    experience_form = ExperienceForm()
+    return render(
+        request,
+        "profiles/detail.html",
+        {
+            "profile": profile,
+            "skill_form": skill_form,
+            "education_form": education_form,
+            "experience_form": experience_form,
+        },
+    )
+
+
+@login_required
 def application_detail(request, application_id):
     application = Application.objects.get(id=application_id)
     progress_item_form = ProgressItemForm()
@@ -99,6 +117,16 @@ def add_progress_item(request, application_id):
         new_progress_item.application_id = application_id
         new_progress_item.save()
     return redirect("application-detail", application_id=application_id)
+
+
+@login_required
+def add_skill(request, profile_id):
+    form = SkillForm(request.POST)
+    if form.is_valid():
+        new_skill = form.save(commit=False)
+        new_skill.profile_id = profile_id
+        new_skill.save()
+    return redirect("profile-detail", profile_id=profile_id)
 
 
 def signup(request):

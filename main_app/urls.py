@@ -40,4 +40,10 @@ urlpatterns = [
         name="progress-item-delete",
     ),
     path("accounts/signup/", views.signup, name="signup"),
+    path("profiles/<int:profile_id>/", views.profile_detail, name="profile-detail"),
+    path(
+        "profiles/<int:profile_id>/add-skill",
+        views.add_skill,
+        name="add-skill",
+    ),
 ]

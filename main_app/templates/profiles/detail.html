@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<link
+	rel="stylesheet"
+	href="{% static 'css/applications/profile-detail.css' %}" />
+{% endblock %} {% block content %}
+
+<div class="page-header">
+    {% if profile.profile_picture_url%}
+	<image
+		src="{{profile.profile_picture_url}}"
+		alt="The owner of this profile." />
+    {% else %}
+    <image src="{% static 'images/pfp-placeholder.svg' %}" alt="A silhouette of a person."/>
+    {% endif %}
+	<h1>
+		{{profile.get_title_display}} {{profile.first_name}} {{profile.last_name}}
+	</h1>
+</div>
+
+{% if profile.resume_url %}
+<div class="resume-container">
+    <a href"{{profile.resume_url}}">View Resume</a>
+</div>
+{% endif %}
+
+<div class="profile-container">
+	<h2>{{profile.headline}}</h2>
+	<div class="experience-container">
+		<h3>Experience</h3>
+		<p></p>
+	</div>
+	<div class="skills-container">
+		<h3>Skils</h3>
+		{% for skill in profile.skill_set.all %}
+        <p>{{skill.skill}}</p>
+        {% endfor %}
+        {% if user.profile.id == profile.id%}
+        <form method='post' action = {% url 'add-skill' profile.id %} class="subsection-content">
+            {% csrf_token %} {{ skill_form.as_p }}
+            <button type='submit' class="btn submit">Add Skill</button>
+        </form>
+        {% endif %}
+	</div>
+	<div class="education-container">
+		<h3>Education</h3>
+		<p></p>
+	</div>
+</div>
+{% endblock %}

@@ -17,6 +17,7 @@
 					{% if user.is_authenticated %}
 					<li><a href="/applications">My Applications</a></li>
 					<li><a href="/applications/create">New Application</a></li>
+					<li><a href="/profiles/{{user.profile.id}}">My Profile</a></li>
 					<li>
 						<form id="logout-form" method="post" action="{% url 'logout' %}">
 							{% csrf_token %}
