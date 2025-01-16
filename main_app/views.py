@@ -129,6 +129,26 @@ def add_skill(request, profile_id):
     return redirect("profile-detail", profile_id=profile_id)
 
 
+@login_required
+def add_education(request, profile_id):
+    form = EducationForm(request.POST)
+    if form.is_valid():
+        new_education = form.save(commit=False)
+        new_education.profile_id = profile_id
+        new_education.save()
+    return redirect("profile-detail", profile_id=profile_id)
+
+
+@login_required
+def add_experience(request, profile_id):
+    form = ExperienceForm(request.POST)
+    if form.is_valid():
+        new_experience = form.save(commit=False)
+        new_experience.profile_id = profile_id
+        new_experience.save()
+    return redirect("profile-detail", profile_id=profile_id)
+
+
 def signup(request):
     error_message = ""
     if request.method == "POST":

@@ -46,4 +46,14 @@ urlpatterns = [
         views.add_skill,
         name="add-skill",
     ),
+    path(
+        "profiles/<int:profile_id>/add-experience",
+        views.add_experience,
+        name="add-experience",
+    ),
+    path(
+        "profiles/<int:profile_id>/add-education",
+        views.add_education,
+        name="add-education",
+    ),
 ]
