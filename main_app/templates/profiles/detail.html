@@ -33,7 +33,7 @@
             <p> From {{ experience.start_date }} to {% if experience.is_current %} current. {% else %} {{ experience.end_date }} {% endif %} </p>
             <p>{{ experience.description }}</p>
             {% if user.profile.id == profile.id%}
-            <a href="">Edit</a><a href="">Delete</a>
+            <a href="">Edit</a><a href="{% url 'experience-delete' experience.id %}">Delete</a>
             {% endif %}
         </p>        
         {% endfor %}
@@ -50,7 +50,7 @@
         <p>
             {{skill.skill}}
             {% if user.profile.id == profile.id%}
-            <a href="">x</a>
+            <a href="{% url 'skill-delete' skill.id %}">x</a>
             {% endif %}
         </p>        
         {% endfor %}
@@ -68,7 +68,7 @@
             <p>{{education.institution_name}}</p>
             <p> From {{education.start_date}} to {% if education.is_current %} current. {% else %} {{education.end_date}} {% endif %} </p>
             {% if user.profile.id == profile.id%}
-            <a href="">Edit</a><a href="">Delete</a>
+            <a href="">Edit</a><a href="{% url 'education-delete' education.id %}">Delete</a>
             {% endif %}
         </p>        
         {% endfor %}

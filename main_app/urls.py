@@ -35,6 +35,21 @@ urlpatterns = [
         name="progress-item-update",
     ),
     path(
+        "educations/<int:pk>/delete/",
+        views.EducationDelete.as_view(),
+        name="education-delete",
+    ),
+    path(
+        "experience/<int:pk>/delete/",
+        views.ExperienceDelete.as_view(),
+        name="experience-delete",
+    ),
+    path(
+        "skills/<int:pk>/delete/",
+        views.SkillDelete.as_view(),
+        name="skill-delete",
+    ),
+    path(
         "progressitems/<int:pk>/delete/",
         views.ProgressItemDelete.as_view(),
         name="progress-item-delete",

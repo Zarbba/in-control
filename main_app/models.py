@@ -74,6 +74,9 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.get_title_display()} {self.first_name} {self.last_name}"
 
+    def get_absolute_url(self):
+        return reverse("profile-detail", kwargs={"pk": self.id})
+
 
 class Skill(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)

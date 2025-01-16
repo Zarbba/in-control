@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Application, ProgressItem, Profile
+from .models import Application, ProgressItem, Profile, Experience, Education, Skill
 from .forms import ProgressItemForm, SkillForm, EducationForm, ExperienceForm
 from django import forms
 
@@ -73,6 +73,21 @@ class ProgressItemUpdate(LoginRequiredMixin, UpdateView):
 
 class ProgressItemDelete(LoginRequiredMixin, DeleteView):
     model = ProgressItem
+    success_url = f"/applications/"
+
+
+class ExperienceDelete(LoginRequiredMixin, DeleteView):
+    model = Experience
+    success_url = f"/applications/"
+
+
+class EducationDelete(LoginRequiredMixin, DeleteView):
+    model = Education
+    success_url = f"/applications/"
+
+
+class SkillDelete(LoginRequiredMixin, DeleteView):
+    model = Skill
     success_url = f"/applications/"
 
 
